@@ -1,0 +1,45 @@
+name: Supabase Sync (Placeholder)
+
+# This is a placeholder workflow for future Supabase/GitHub sync automation
+# TODO: Implement bidirectional sync between GitHub Issues and Supabase
+
+on:
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled]
+  issue_comment:
+    types: [created]
+
+jobs:
+  sync-to-supabase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Placeholder - Log Event
+        run: |
+          echo "Issue event detected: ${{ github.event.action }}"
+          echo "Issue number: ${{ github.event.issue.number }}"
+          echo "Repository: ${{ github.repository }}"
+
+      # TODO: Add actual Supabase sync logic
+      # - name: Sync to Supabase
+      #   env:
+      #     SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      #     SUPABASE_SERVICE_ROLE: ${{ secrets.SUPABASE_SERVICE_ROLE }}
+      #   run: |
+      #     # Call Edge Function or direct API to sync issue data
+      #     # curl -X POST $SUPABASE_URL/functions/v1/sync-issue \
+      #     #   -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE" \
+      #     #   -d '{ "issue": ${{ toJson(github.event.issue) }} }'
+
+      - name: Future Enhancement Notes
+        run: |
+          echo "Future sync will include:"
+          echo "- Issue creation/update → Supabase events table"
+          echo "- Issue closure → Update Supabase issues table"
+          echo "- Comments → Log to Supabase activity log"
+          echo "- Labels → Sync to Supabase for analytics"
+          echo "- Test results → Extract and store in Supabase"
+          echo ""
+          echo "Current workaround:"
+          echo "- Use the github-webhook Edge Function deployed in github-bootstrap repo"
+          echo "- That handles GitHub → Supabase sync via webhooks"

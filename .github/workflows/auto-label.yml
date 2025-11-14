@@ -1,0 +1,103 @@
+name: Auto Label Issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  auto-label:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Add labels based on issue template
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body || '';
+            const title = issue.title || '';
+            const labels = [];
+
+            // Check which template was used and add appropriate labels
+            if (body.includes('Target Website') || body.includes('Scraper')) {
+              labels.push('auto:scraper');
+            }
+
+            if (body.includes('Agent Information') || title.includes('[Agent]')) {
+              labels.push('auto:agent');
+            }
+
+            // Add domain-specific labels based on content
+            if (body.includes('selector') || body.includes('Selector')) {
+              labels.push('scraper:selector');
+            }
+
+            if (body.includes('Playwright') || body.includes('playwright')) {
+              labels.push('scraper:playwright');
+            }
+
+            if (body.includes('data quality') || body.includes('Data quality')) {
+              labels.push('scraper:data-quality');
+            }
+
+            if (body.includes('Supabase') || body.includes('supabase')) {
+              labels.push('supabase:api');
+            }
+
+            if (body.includes('schema') || body.includes('Schema')) {
+              labels.push('supabase:schema');
+            }
+
+            if (body.includes('workflow') || body.includes('Workflow') || body.includes('CI/CD')) {
+              labels.push('infra:workflow');
+            }
+
+            if (body.includes('documentation') || body.includes('Documentation') || title.toLowerCase().includes('docs')) {
+              labels.push('documentation');
+            }
+
+            // Add labels if any were identified
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: labels
+              });
+
+              console.log(`Added labels: ${labels.join(', ')}`);
+            }
+
+      - name: Add to Project Board
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.payload.issue;
+
+            // GraphQL mutation to add issue to project
+            const mutation = `
+              mutation($projectId: ID!, $contentId: ID!) {
+                addProjectV2ItemById(input: {
+                  projectId: $projectId,
+                  contentId: $contentId
+                }) {
+                  item {
+                    id
+                  }
+                }
+              }
+            `;
+
+            try {
+              await github.graphql(mutation, {
+                projectId: 'PVT_kwHOASdJL84BIJoD', // Agent Kanban Project ID
+                contentId: issue.node_id
+              });
+              console.log('Issue added to Agent Kanban project');
+            } catch (error) {
+              console.error('Failed to add to project:', error);
+            }
