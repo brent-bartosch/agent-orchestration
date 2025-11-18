@@ -35,6 +35,24 @@ The **agent-orchestration** repository is the control tower for a distributed, m
 
 ---
 
+## 🤖 For AI Agents: Start Here
+
+**If you're an LLM agent (Claude Code, Codex, etc.) starting a new session, read this first:**
+
+👉 **[AGENT_START_HERE.md](AGENT_START_HERE.md)** 👈
+
+This guide contains everything you need to:
+- Create and manage issues
+- Log tests and results
+- Write session logs
+- Avoid duplicate issues
+- Integrate with the Kanban board
+- Use Supabase event logging
+
+**Bookmark it. Reference it every session.**
+
+---
+
 ## Quick Start
 
 ### 1. Create Your First Issue
@@ -282,13 +300,15 @@ Comprehensive guides for all aspects of the system:
 
 | Document | Purpose |
 |----------|---------|
+| **[AGENT_START_HERE.md](AGENT_START_HERE.md)** | **🤖 Quick start guide for AI agents - read this first!** |
 | [AGENT_WORKFLOW.md](docs/AGENT_WORKFLOW.md) | How agents use issues, testing, and logging |
 | [ARCHITECTURE_OVERVIEW.md](docs/ARCHITECTURE_OVERVIEW.md) | System architecture and vision |
 | [ISSUE_GUIDE.md](docs/ISSUE_GUIDE.md) | Complete issue management guide |
 | [TESTING_GUIDE.md](docs/TESTING_GUIDE.md) | Testing best practices and automation |
 | [SESSION_LOGGING.md](docs/SESSION_LOGGING.md) | Session log format and practices |
 
-**Start here:** [docs/AGENT_WORKFLOW.md](docs/AGENT_WORKFLOW.md)
+**For AI agents, start here:** [AGENT_START_HERE.md](AGENT_START_HERE.md)
+**For humans, start here:** [docs/AGENT_WORKFLOW.md](docs/AGENT_WORKFLOW.md)
 
 ---
 
@@ -459,6 +479,16 @@ LOGS_ROOT=~/agent-logs
 ---
 
 ## Next Steps
+
+### For AI Agents
+
+1. **Read [AGENT_START_HERE.md](AGENT_START_HERE.md)** - Everything you need for your first session
+2. **Search for existing issues** before creating new ones
+3. **Create or claim an issue** and add yourself as assignee
+4. **Start working** and update the issue with progress
+5. **Log your session** to `~/agent-logs/<project>/claude/` when done
+
+### For Humans
 
 1. **Create your first issue** using one of the templates
 2. **Read the documentation** starting with [AGENT_WORKFLOW.md](docs/AGENT_WORKFLOW.md)

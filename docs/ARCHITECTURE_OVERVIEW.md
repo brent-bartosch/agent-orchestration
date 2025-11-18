@@ -2,6 +2,8 @@
 
 This document describes the vision and architecture of the multi-agent orchestration system, how different repositories fit together, and the role of Supabase as the event ledger.
 
+> **🤖 For practical agent instructions**, see [AGENT_START_HERE.md](../AGENT_START_HERE.md) for quick-start commands and workflows.
+
 ---
 
 ## Vision: Multi-Agent System with Unified Control
@@ -90,7 +92,7 @@ The **agent-orchestration** repository serves as the **central control tower** f
 
 ---
 
-### 2. **github-bootstrap**
+### 2. **github-bootstrap** ✅ CONFIGURED
 
 **Purpose:** Agent → GitHub → Supabase infrastructure
 
@@ -104,15 +106,17 @@ The **agent-orchestration** repository serves as the **central control tower** f
 **Workflow:**
 - Collector runs in background, watching for new transcript files
 - When transcripts are saved, action items are extracted
-- Issues are created in the appropriate repository
+- Issues are created in `agent-orchestration` with `auto:agent` label
 - Webhook syncs changes back to Supabase
 
 **URL:** https://github.com/brent-bartosch/github-bootstrap
 
-**Integration:**
-- Transcripts saved to `~/agent-logs/<project>/claude/*.md`
-- Collector reads transcripts and creates issues in `agent-orchestration`
-- Events logged to Supabase `events` table
+**Integration Status:**
+- ✅ Collector configured to create issues in `agent-orchestration`
+- ✅ Default labels updated to `auto:agent` (aligned with new taxonomy)
+- ✅ Edge Function deployed and syncing GitHub → Supabase
+- ✅ Transcripts saved to `~/agent-logs/<project>/claude/*.md`
+- ✅ Events logged to Supabase `events` table
 
 ---
 
@@ -205,13 +209,17 @@ The **agent-orchestration** repository serves as the **central control tower** f
 
 ## Supabase Integration Goals
 
-### Current State (v0)
+### Current State (v0) ✅ OPERATIONAL
 
-**Implemented:**
-- `issues` table - mirrors GitHub issues
-- `events` table - logs all events (chat transcripts, issue promotions, GitHub webhooks)
-- Edge Function - syncs GitHub changes to Supabase
-- Collector - creates issues from transcripts
+**Fully Implemented and Connected:**
+- ✅ `issues` table - mirrors GitHub issues
+- ✅ `events` table - logs all events (chat transcripts, issue promotions, GitHub webhooks)
+- ✅ Edge Function - syncs GitHub changes to Supabase (deployed and tested)
+- ✅ Collector - creates issues in agent-orchestration from transcripts (configured with `auto:agent` label)
+- ✅ GitHub Project Board - All columns, custom fields, and labels configured
+- ✅ Auto-label workflow - Automatically categorizes and attempts to add issues to Project
+- ✅ Issue templates - Scraper and agent templates ready to use
+- ✅ Complete documentation - AGENT_START_HERE.md, workflow guides, testing guide, session logging guide
 
 **Schema:**
 ```sql

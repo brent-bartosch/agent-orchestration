@@ -2,6 +2,8 @@
 
 This document describes how AI agents (Claude Code, Codex, GitHub Actions, local scripts) interact with the **agent-orchestration** system through Issues, the GitHub Project board, and Supabase logging.
 
+> **🤖 Starting a new agent session?** Read [AGENT_START_HERE.md](../AGENT_START_HERE.md) first for a quick-start guide with all essential commands and workflows.
+
 ---
 
 ## Overview
